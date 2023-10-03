@@ -19,7 +19,7 @@ const Navbar = () => {
         <Link href='/' className='flex items-center'>
           <Image src={Logo} alt='Logo' width={27} height={27} />
 
-          <p className='nav-logo'>
+          <p className='nav-logo pl-1'>
             Price <span className='text-primary'>Wise</span>
           </p>
         </Link>
