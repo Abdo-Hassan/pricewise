@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import Logo from '../../public/assets/icons/logo.svg';
-import Search from '../../public/assets/icons/search.svg';
-import Heart from '../../public/assets/icons/black-heart.svg';
-import User from '../../public/assets/icons/user.svg';
+import Logo from '../public/assets/icons/logo.svg';
+import Search from '../public/assets/icons/search.svg';
+import Heart from '../public/assets/icons/black-heart.svg';
+import User from '../public/assets/icons/user.svg';
 
 const navIcons = [
   { src: Search, alt: 'search' },

@@ -3,12 +3,12 @@
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Hand from '../../public/assets/icons/hand-drawn-arrow.svg';
-import Hero1 from '../../public/assets/images/hero-1.svg';
-import Hero2 from '../../public/assets/images/hero-2.svg';
-import Hero3 from '../../public/assets/images/hero-3.svg';
-import Hero4 from '../../public/assets/images/hero-4.svg';
-import Hero5 from '../../public/assets/images/hero-5.svg';
+import Hand from '../public/assets/icons/hand-drawn-arrow.svg';
+import Hero1 from '../public/assets/images/hero-1.svg';
+import Hero2 from '../public/assets/images/hero-2.svg';
+import Hero3 from '../public/assets/images/hero-3.svg';
+import Hero4 from '../public/assets/images/hero-4.svg';
+import Hero5 from '../public/assets/images/hero-5.svg';
 import Image from 'next/image';
 
 const HeroCarousel = () => {
@@ -23,9 +23,9 @@ const HeroCarousel = () => {
     <div className='hero-carousel'>
       <Carousel
         showThumbs={false}
-        autoPlay
+        // autoPlay
         infiniteLoop
-        interval={2000}
+        // interval={2000}
         showArrows={false}
         showStatus={false}>
         {heroImage.map((hero) => (

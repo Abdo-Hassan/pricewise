@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import ArrowRight from '../public/assets/icons/arrow-right.svg';
-import SearchBar from './components/SearchBar';
-import HeroCarousel from './components/HeroCarousel';
+import SearchBar from '../components/SearchBar';
+import HeroCarousel from '../components/HeroCarousel';
 
 const Home = () => {
   return (
