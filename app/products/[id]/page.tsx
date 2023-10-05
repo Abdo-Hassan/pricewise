@@ -1,4 +1,4 @@
-import { getProductById } from '@/lib/actions';
+import { getProductById, getSimilarProducts } from '@/lib/actions';
 import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -9,15 +9,20 @@ import Comment from '../../../public/assets/icons/comment.svg';
 import Star from '../../../public/assets/icons/star.svg';
 import Chart from '../../../public/assets/icons/chart.svg';
 import Highest from '../../../public/assets/icons/arrow-up.svg';
+import Buy from '../../../public/assets/icons/bag.svg';
+import Lowest from '../../../public/assets/icons/arrow-down.svg';
 import PriceTag from '../../../public/assets/icons/price-tag.svg';
 import { formatNumber } from '@/lib/utils';
 import PriceInfoCard from '@/components/PriceInfoCard';
+import ProductCard from '@/components/ProductCard';
+import Modal from '@/components/Modal';
 
 type Props = {
   params: { id: string };
 };
 const ProductDetails = async ({ params: { id } }: Props) => {
   const product = await getProductById(id);
+  const similarProducts = await getSimilarProducts(id);
 
   if (!product) redirect('/');
 
@@ -70,7 +75,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </div>
             </div>
           </div>
-
           {/* product prices */}
           <div className='product-info'>
             <div className='flex flex-col gap-2'>
@@ -107,7 +111,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
               </p>
             </div>
           </div>
-
           {/* Price Card */}
           <div className='my-7 flex flex-col gap-5'>
             <div className='flex gap-5 flex-wrap'>
@@ -117,7 +120,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 value={`${product.currency} ${formatNumber(
                   product.currentPrice
                 )}`}
-                borderColor='#b6dbff'
               />
               <PriceInfoCard
                 title='Average Price'
@@ -125,7 +127,6 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 value={`${product.currency} ${formatNumber(
                   product.averagePrice
                 )}`}
-                borderColor='#b6dbff'
               />
               <PriceInfoCard
                 title='Highest Price'
@@ -133,20 +134,57 @@ const ProductDetails = async ({ params: { id } }: Props) => {
                 value={`${product.currency} ${formatNumber(
                   product.highestPrice
                 )}`}
-                borderColor='#b6dbff'
               />
               <PriceInfoCard
-                title='Current Price'
-                iconSrc={PriceTag}
+                title='Lowest Price'
+                iconSrc={Lowest}
                 value={`${product.currency} ${formatNumber(
-                  product.currentPrice
+                  product.lowestPrice
                 )}`}
-                borderColor='#b6dbff'
               />
             </div>
           </div>
+          {/* Modal */}
+          <Modal />
         </div>
       </div>
+
+      {/* footer */}
+      <div className='flex flex-col gap-16'>
+        <div className='flex flex-col gap-5'>
+          <h3 className='text-2xl text-secondary font-semibold'>
+            Product Description
+          </h3>
+
+          <div className='flex flex-col gap-4'>
+            {product?.description?.split('\n')}
+          </div>
+        </div>
+
+        {/* Buy Now */}
+        <button className='btn w-fit mx-auto flex items-center justify-center gap-3 min-w-[200px]'>
+          <Image src={Buy} alt='Check' width={22} height={22} />
+
+          <Link
+            href={product.url}
+            className='text-base text-white'
+            target='_blank'>
+            Buy Now
+          </Link>
+        </button>
+      </div>
+
+      {similarProducts && similarProducts?.length > 0 && (
+        <div className='py-14 flex flex-col gap-2 w-full'>
+          <p className='section-text'>Similar Products</p>
+
+          <div className='flex flex-wrap gap-10 mt-7 w-full'>
+            {similarProducts?.map((similarProduct) => (
+              <ProductCard key={product._id} product={similarProduct} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
