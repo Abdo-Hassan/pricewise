@@ -49,7 +49,9 @@ export const getProductById = async (productId: string) => {
   try {
     await connectToDB();
 
-    const product = await Product.findOne({ _id: productId });
+    const product: ProductType | null = await Product.findOne({
+      _id: productId,
+    });
 
     if (!product) return null;
 

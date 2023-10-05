@@ -1,3 +1,4 @@
+import { ProductType } from '@/types';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { extractCurrency, extractDescription, extractPrice } from '../utils';
@@ -59,7 +60,7 @@ export const scrapeAmazonProduct = async (url: string) => {
     const description = extractDescription($);
 
     // Construct data object with scraped information
-    const data = {
+    const data: ProductType = {
       url,
       currency: currency || '$',
       image: imageUrls[0],
