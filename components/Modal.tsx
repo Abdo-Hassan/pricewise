@@ -6,8 +6,13 @@ import { FormEvent, Fragment, useState } from 'react';
 import Logo from '../public/assets/icons/logo.svg';
 import Mail from '../public/assets/icons/mail.svg';
 import Close from '../public/assets/icons/x-close.svg';
+import { addUserEmailToProduct } from '@/lib/actions';
 
-const Modal = () => {
+interface Props {
+  productId: string;
+}
+
+const Modal = ({ productId }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState('');
@@ -17,7 +22,7 @@ const Modal = () => {
     setIsSubmitting(true);
 
     // add user email to product
-    // await addUserEmailToProduct(productId, email);
+    await addUserEmailToProduct(productId, email);
 
     setIsSubmitting(false);
     setEmail('');
