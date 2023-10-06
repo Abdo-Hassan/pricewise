@@ -1,7 +1,7 @@
-import { EmailProductInfo, NotificationType, EmailContent } from '@/types';
-import nodemailer from 'nodemailer';
+'use server';
 
-export const THRESHOLD_PERCENTAGE = 40;
+import { EmailContent, EmailProductInfo, NotificationType } from '@/types';
+import nodemailer from 'nodemailer';
 
 const Notification = {
   WELCOME: 'WELCOME',
@@ -10,10 +10,11 @@ const Notification = {
   THRESHOLD_MET: 'THRESHOLD_MET',
 };
 
-export function generateEmailBody(
+export async function generateEmailBody(
   product: EmailProductInfo,
   type: NotificationType
-): any {
+) {
+  const THRESHOLD_PERCENTAGE = 40;
   // Shorten the product title
   const shortenedTitle =
     product.title.length > 20
@@ -35,6 +36,7 @@ export function generateEmailBody(
             <h3>${product.title} is back in stock!</h3>
             <p>We're excited to let you know that ${product.title} is now back in stock.</p>
             <p>Don't miss out - <a href="${product.url}" target="_blank" rel="noopener noreferrer">buy it now</a>!</p>
+            <img src="https://i.ibb.co/pwFBRMC/Screenshot-2023-09-26-at-1-47-50-AM.png" alt="Product Image" style="max-width: 100%;" />
           </div>
           <p>Stay tuned for more updates on ${product.title} and other products you're tracking.</p>
         </div>
@@ -83,8 +85,8 @@ const transporter = nodemailer.createTransport({
   service: 'hotmail',
   port: 2525,
   auth: {
-    user: process.env.OUTLOOK_EMAIL,
-    pass: process.env.OUTLOOK_PASS,
+    user: 'javascriptmastery@outlook.com',
+    pass: process.env.EMAIL_PASSWORD,
   },
   maxConnections: 1,
 });
@@ -94,7 +96,7 @@ export const sendEmail = async (
   sendTo: string[]
 ) => {
   const mailOptions = {
-    from: process.env.OUTLOOK_EMAIL,
+    from: 'javascriptmastery@outlook.com',
     to: sendTo,
     html: emailContent.body,
     subject: emailContent.subject,
@@ -102,6 +104,7 @@ export const sendEmail = async (
 
   transporter.sendMail(mailOptions, (error: any, info: any) => {
     if (error) return console.log(error);
-    console.log('Email sent successfully', info);
+
+    console.log('Email sent: ', info);
   });
 };
